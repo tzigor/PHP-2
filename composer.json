@@ -1,0 +1,17 @@
+{
+    "name": "itsukanov/php-2",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "tzigor",
+            "email": "igortz@mail.ru"
+        }
+    ],
+    "require": {
+        "fakerphp/faker": "^1.21"
+    }
+}
