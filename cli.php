@@ -3,7 +3,6 @@
 // require_once __DIR__ . '/vendor/autoload.php';
 
 use src\Blog\Article_Post;
-use src\Blog\Comment;
 use src\User_name\Person_Name;
 
 spl_autoload_register(function ($class) {
