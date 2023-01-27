@@ -6,28 +6,34 @@ class Post
 {
     public function __construct(
         private UUID $uuid,
-        private User $user,
-        private string $text
+        private UUID $author_uuid,
+        private string $title,
+        private string $text,
     ) {
     }
 
-    public function getId(): UUID
+    public function uuid(): UUID
     {
         return $this->uuid;
     }
 
-    public function getUser(): User
+    public function author_uuid(): UUID
     {
-        return $this->user;
+        return $this->author_uuid;
     }
 
-    public function getText(): String
+    public function text(): String
     {
         return $this->text;
     }
 
-    public function __toString()
+    public function title(): String
     {
-        return $this->user . ' wrote: ' . $this->text . PHP_EOL;
+        return $this->title;
+    }
+
+    public function __toString(): string
+    {
+        return "Post: $this->title -> $this->text." . PHP_EOL;
     }
 }

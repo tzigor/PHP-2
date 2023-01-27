@@ -61,7 +61,6 @@ class SqliteUsersRepository implements UsersRepositoryInterface
         );
     }
 
-
     public function getByUsername(string $username): User
     {
         $statement = $this->connection->prepare(
