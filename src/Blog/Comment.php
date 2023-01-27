@@ -7,9 +7,9 @@ use src\Blog\{User, Post};
 class Comment
 {
     public function __construct(
-        private int $id,
-        private User $user,
+        private UUID $uuid,
         private Post $post,
+        private User $user,
         private string $text
     ) {
     }

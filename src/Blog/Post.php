@@ -5,15 +5,15 @@ namespace src\Blog;
 class Post
 {
     public function __construct(
-        private int $id,
+        private UUID $uuid,
         private User $user,
         private string $text
     ) {
     }
 
-    public function getId(): int
+    public function getId(): UUID
     {
-        return $this->id;
+        return $this->uuid;
     }
 
     public function getUser(): User
