@@ -6,7 +6,7 @@ class Post
 {
     public function __construct(
         private UUID $uuid,
-        private UUID $author_uuid,
+        private User $user,
         private string $title,
         private string $text,
     ) {
@@ -17,9 +17,14 @@ class Post
         return $this->uuid;
     }
 
+    public function user(): User
+    {
+        return $this->user;
+    }
+
     public function author_uuid(): UUID
     {
-        return $this->author_uuid;
+        return $this->user->uuid();
     }
 
     public function text(): String
@@ -34,6 +39,6 @@ class Post
 
     public function __toString(): string
     {
-        return "Post: $this->title -> $this->text." . PHP_EOL;
+        return "From " . $this->user->name()->first() . " Post: $this->title -> $this->text." . PHP_EOL;
     }
 }

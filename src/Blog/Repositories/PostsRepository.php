@@ -7,6 +7,7 @@ use \PDO;
 use PDOStatement;
 use src\Blog\Exceptions\PostNotFoundException;
 use src\Blog\Interfaces\PostsRepositoryInterface;
+use src\Blog\Repositories\UsersRepositories\SqliteUsersRepository;
 
 class PostsRepository implements PostsRepositoryInterface
 {
@@ -41,18 +42,19 @@ class PostsRepository implements PostsRepositoryInterface
         return $this->getPost($statement, $uuid);
     }
 
-    private function getPost(PDOStatement $statement, string $username): Post
+    private function getPost(PDOStatement $statement, string $userUuid): Post
     {
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         if ($result === false) {
             throw new PostNotFoundException(
-                "Cannot find post: $username"
+                "Cannot find post: $userUuid"
             );
         }
-
+        $usersRepository = new SqliteUsersRepository($this->connection);
+        $user = $usersRepository->get(new UUID($result['author_uuid']));
         return new Post(
             new UUID($result['uuid']),
-            new UUID($result['author_uuid']),
+            $user,
             $result['title'],
             $result['text']
         );

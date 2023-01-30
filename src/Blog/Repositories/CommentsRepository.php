@@ -7,6 +7,7 @@ use \PDO;
 use PDOStatement;
 use src\Blog\Exceptions\CommentNotFoundException;
 use src\Blog\Interfaces\CommentsRepositoryInterface;
+use src\Blog\Repositories\PostsRepository;
 
 class CommentsRepository implements CommentsRepositoryInterface
 {
@@ -24,8 +25,8 @@ class CommentsRepository implements CommentsRepositoryInterface
 
         $statement->execute([
             'uuid' => $comment->uuid(),
-            'post_uuid' => $comment->author_uuid(),
-            'author_uuid' => $comment->author_uuid(),
+            'post_uuid' => (string)$comment->post_uuid(),
+            'author_uuid' => (string)$comment->author_uuid(),
             'text' => $comment->text(),
         ]);
     }
@@ -50,11 +51,13 @@ class CommentsRepository implements CommentsRepositoryInterface
             );
         }
 
+        $postRepository = new PostsRepository($this->connection);
+        $post = $postRepository->get(new UUID($result['post_uuid']));
+
         return new Comment(
             new UUID($result['uuid']),
-            new UUID($result['post_uuid']),
-            new UUID($result['author_uuid']),
-            $result['text']
+            $post,
+            $result['text'],
         );
     }
 }
