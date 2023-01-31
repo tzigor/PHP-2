@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use src\Blog\Command\{createUserCommand, Arguments};
+use src\Blog\Commands\{createUserCommand, Arguments};
 use src\Blog\Repositories\UsersRepositories\SqliteUsersRepository;
 use src\Blog\Repositories\{PostsRepository, CommentsRepository};
 use src\Blog\{Post, Comment, UUID, User};
