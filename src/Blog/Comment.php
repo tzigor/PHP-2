@@ -2,20 +2,37 @@
 
 namespace src\Blog;
 
-use src\Blog\{User, Post};
-
 class Comment
 {
     public function __construct(
-        private int $id,
-        private User $user,
+        private UUID $uuid,
         private Post $post,
         private string $text
     ) {
     }
 
+    public function uuid(): UUID
+    {
+        return $this->uuid;
+    }
+
+    public function post_uuid(): UUID
+    {
+        return $this->post->uuid();
+    }
+
+    public function author_uuid(): UUID
+    {
+        return $this->post->user()->uuid();
+    }
+
     public function __toString()
     {
-        return $this->user . " wrote comment " . $this->text . PHP_EOL;
+        return $this->text . PHP_EOL;
+    }
+
+    public function text(): String
+    {
+        return $this->text;
     }
 }

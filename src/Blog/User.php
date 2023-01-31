@@ -7,22 +7,27 @@ use src\Person\Name;
 class User
 {
     public function __construct(
-        private int $id,
-        private Name $username,
-        private string $login,
+        private UUID $uuid,
+        private Name $name,
+        private string $username,
     ) {
     }
     public function __toString(): string
     {
-        return "User $this->id with name $this->username and login $this->login." . PHP_EOL;
+        return "User $this->uuid with name $this->name and login $this->username." . PHP_EOL;
     }
 
-    public function getId(): int
+    public function uuid(): UUID
     {
-        return $this->id;
+        return $this->uuid;
     }
 
     public function name(): Name
+    {
+        return $this->name;
+    }
+
+    public function username(): string
     {
         return $this->username;
     }

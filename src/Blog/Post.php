@@ -5,29 +5,40 @@ namespace src\Blog;
 class Post
 {
     public function __construct(
-        private int $id,
+        private UUID $uuid,
         private User $user,
-        private string $text
+        private string $title,
+        private string $text,
     ) {
     }
 
-    public function getId(): int
+    public function uuid(): UUID
     {
-        return $this->id;
+        return $this->uuid;
     }
 
-    public function getUser(): User
+    public function user(): User
     {
         return $this->user;
     }
 
-    public function getText(): String
+    public function author_uuid(): UUID
+    {
+        return $this->user->uuid();
+    }
+
+    public function text(): String
     {
         return $this->text;
     }
 
-    public function __toString()
+    public function title(): String
     {
-        return $this->user . ' wrote: ' . $this->text . PHP_EOL;
+        return $this->title;
+    }
+
+    public function __toString(): string
+    {
+        return "From " . $this->user->name()->first() . " Post: $this->title -> $this->text." . PHP_EOL;
     }
 }
