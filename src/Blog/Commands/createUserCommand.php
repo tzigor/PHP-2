@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Blog\Command;
+namespace src\Blog\Commands;
 
 use src\Blog\{User, UUID};
 use src\Person\Name;
