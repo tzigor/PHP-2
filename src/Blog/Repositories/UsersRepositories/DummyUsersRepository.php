@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Blog\Repositories;
+namespace src\Blog\Repositories\UsersRepositories;
 
 use src\Blog\{User, UUID};
 use src\Person\Name;
