@@ -42,6 +42,16 @@ class CommentsRepository implements CommentsRepositoryInterface
         return $this->getComment($statement, $uuid);
     }
 
+    public function delete(UUID $uuid): void
+    {
+        $statement = $this->connection->prepare(
+            'DELETE FROM comments WHERE uuid = :uuid'
+        );
+        $statement->execute([
+            'uuid' => (string)$uuid,
+        ]);
+    }
+
     private function getComment(PDOStatement $statement, string $username): Comment
     {
         $result = $statement->fetch(PDO::FETCH_ASSOC);
