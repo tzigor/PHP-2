@@ -24,7 +24,7 @@ class SqliteUsersRepository implements UsersRepositoryInterface
         );
 
         $statement->execute([
-            'uuid' => $user->uuid(),
+            'uuid' => (string)$user->uuid(),
             'username' => $user->username(),
             'first_name' => $user->name()->first(),
             'last_name' => $user->name()->last(),
