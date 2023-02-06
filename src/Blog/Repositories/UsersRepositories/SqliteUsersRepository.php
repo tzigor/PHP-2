@@ -31,6 +31,16 @@ class SqliteUsersRepository implements UsersRepositoryInterface
         ]);
     }
 
+    public function delete(UUID $uuid): void
+    {
+        $statement = $this->connection->prepare(
+            'DELETE FROM users WHERE uuid = :uuid'
+        );
+        $statement->execute([
+            'uuid' => (string)$uuid,
+        ]);
+    }
+
     public function get(UUID $uuid): User
     {
         $statement = $this->connection->prepare(
@@ -70,5 +80,16 @@ class SqliteUsersRepository implements UsersRepositoryInterface
             ':username' => $username,
         ]);
         return $this->getUser($statement, $username);
+    }
+
+    public function getUuidByUsername(string $username): UUID
+    {
+        $statement = $this->connection->prepare(
+            'SELECT * FROM users WHERE username = :username'
+        );
+        $statement->execute([
+            ':username' => $username,
+        ]);
+        return $this->getUser($statement, $username)->uuid();
     }
 }
