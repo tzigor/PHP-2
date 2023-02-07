@@ -29,6 +29,11 @@ class CreateUserCommandTest extends TestCase
             public function save(User $user): void
             {
             }
+
+            public function delete(UUID $uuid): void
+            {
+            }
+
             public function get(UUID $uuid): User
             {
                 throw new UserNotFoundException("Not found");
@@ -36,6 +41,10 @@ class CreateUserCommandTest extends TestCase
             public function getByUsername(string $username): User
             {
                 throw new UserNotFoundException("Not found");
+            }
+            public function getUuidByUsername(string $username): UUID
+            {
+                return UUID::random();
             }
         };
         $command = new CreateUserCommand($usersRepository);
@@ -51,6 +60,9 @@ class CreateUserCommandTest extends TestCase
             public function save(User $user): void
             {
             }
+            public function delete(UUID $uuid): void
+            {
+            }
             public function get(UUID $uuid): User
             {
                 throw new UserNotFoundException("Not found");
@@ -58,6 +70,10 @@ class CreateUserCommandTest extends TestCase
             public function getByUsername(string $username): User
             {
                 throw new UserNotFoundException("Not found");
+            }
+            public function getUuidByUsername(string $username): UUID
+            {
+                return UUID::random();
             }
         };
     }
@@ -90,6 +106,9 @@ class CreateUserCommandTest extends TestCase
             {
                 $this->called = true;
             }
+            public function delete(UUID $uuid): void
+            {
+            }
             public function get(UUID $uuid): User
             {
                 throw new UserNotFoundException("Not found");
@@ -97,6 +116,10 @@ class CreateUserCommandTest extends TestCase
             public function getByUsername(string $username): User
             {
                 throw new UserNotFoundException("Not found");
+            }
+            public function getUuidByUsername(string $username): UUID
+            {
+                return UUID::random();
             }
             public function wasCalled(): bool
             {

@@ -11,9 +11,9 @@ use src\Blog\Exceptions\{HttpException, UserNotFoundException, PostNotFoundExcep
 class CreateComment implements ActionInterface
 {
     public function __construct(
-        private CommentsRepositoryInterface $commentsRepository,
         private PostsRepositoryInterface $postsRepository,
         private UsersRepositoryInterface $usersRepository,
+        private CommentsRepositoryInterface $commentsRepository,
     ) {
     }
     public function handle(Request $request): Response
@@ -40,6 +40,7 @@ class CreateComment implements ActionInterface
                 $newCommentUuid,
                 $post,
                 $request->jsonBodyField('text'),
+                $user
             );
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());

@@ -2,8 +2,8 @@
 
 namespace src\Blog\Exceptions;
 
-use Exception;
+use src\Blog\Exceptions\AppException;
 
-class ArgumentsException extends Exception
+class ArgumentsException extends AppException
 {
 }
