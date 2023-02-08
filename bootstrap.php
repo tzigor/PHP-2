@@ -1,5 +1,8 @@
 <?php
 
+use Psr\Log\LoggerInterface;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use src\Blog\Container\DIContainer;
 use src\Blog\Interfaces\UsersRepositoryInterface;
 use src\Blog\Interfaces\PostsRepositoryInterface;
@@ -15,6 +18,14 @@ use src\Blog\Repositories\UsersRepositories\SqliteUsersRepository;
 require_once __DIR__ . '/vendor/autoload.php';
 
 $container = new DIContainer();
+
+$container->bind(
+    LoggerInterface::class,
+    (new Logger('blog'))
+        ->pushHandler(new StreamHandler(
+            __DIR__ . '/logs/blog.log'
+        ))
+);
 
 $container->bind(
     PDO::class,
