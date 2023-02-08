@@ -8,6 +8,7 @@ use PDOStatement;
 use src\Blog\Exceptions\CommentNotFoundException;
 use src\Blog\Interfaces\CommentsRepositoryInterface;
 use src\Blog\Repositories\PostsRepository;
+use src\Blog\Repositories\UsersRepositories\SqliteUsersRepository;
 
 class CommentsRepository implements CommentsRepositoryInterface
 {
@@ -42,16 +43,6 @@ class CommentsRepository implements CommentsRepositoryInterface
         return $this->getComment($statement, $uuid);
     }
 
-    public function delete(UUID $uuid): void
-    {
-        $statement = $this->connection->prepare(
-            'DELETE FROM comments WHERE uuid = :uuid'
-        );
-        $statement->execute([
-            'uuid' => (string)$uuid,
-        ]);
-    }
-
     private function getComment(PDOStatement $statement, string $username): Comment
     {
         $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -64,10 +55,24 @@ class CommentsRepository implements CommentsRepositoryInterface
         $postRepository = new PostsRepository($this->connection);
         $post = $postRepository->get(new UUID($result['post_uuid']));
 
+        $usersRepository = new SqliteUsersRepository($this->connection);
+        $user = $usersRepository->get(new UUID($result['author_uuid']));
+
         return new Comment(
             new UUID($result['uuid']),
             $post,
             $result['text'],
+            $user,
         );
+    }
+
+    public function delete(UUID $uuid): void
+    {
+        $statement = $this->connection->prepare(
+            'DELETE FROM comments WHERE uuid = :uuid'
+        );
+        $statement->execute([
+            'uuid' => (string)$uuid,
+        ]);
     }
 }

@@ -13,6 +13,10 @@ class DummyUsersRepository implements UsersRepositoryInterface
     {
     }
 
+    public function delete(UUID $uuid): void
+    {
+    }
+
     public function get(UUID $uuid): User
     {
         throw new UserNotFoundException("Not found");
@@ -21,5 +25,10 @@ class DummyUsersRepository implements UsersRepositoryInterface
     public function getByUsername(string $username): User
     {
         return new User(UUID::random(), new Name("first", "last"), "user123");
+    }
+
+    public function getUuidByUsername(string $username): UUID
+    {
+        return UUID::random();
     }
 }

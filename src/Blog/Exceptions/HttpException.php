@@ -2,8 +2,8 @@
 
 namespace src\Blog\Exceptions;
 
-use Exception;
+use src\Blog\Exceptions\AppException;
 
-class HttpException extends Exception
+class HttpException extends AppException
 {
 }

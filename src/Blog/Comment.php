@@ -7,7 +7,8 @@ class Comment
     public function __construct(
         private UUID $uuid,
         private Post $post,
-        private string $text
+        private string $text,
+        private User $user
     ) {
     }
 
@@ -23,7 +24,7 @@ class Comment
 
     public function author_uuid(): UUID
     {
-        return $this->post->user()->uuid();
+        return $this->user->uuid();
     }
 
     public function __toString()

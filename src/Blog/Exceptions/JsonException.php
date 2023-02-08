@@ -2,8 +2,8 @@
 
 namespace src\Blog\Exceptions;
 
-use Exception;
+use src\Blog\Exceptions\AppException;
 
-class JsonException extends Exception
+class JsonException extends AppException
 {
 }
