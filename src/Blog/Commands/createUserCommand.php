@@ -24,7 +24,9 @@ class createUserCommand
 
         $username = $arguments->get('username');
         if ($this->userExists($username)) {
-            throw new CommandException("User already exists: $username");
+            // throw new CommandException("User already exists: $username");
+            $this->logger->warning("User already exists: $username");
+            return;
         }
         $uuid = UUID::random();
         $this->usersRepository->save(new User(
