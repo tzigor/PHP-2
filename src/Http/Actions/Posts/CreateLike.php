@@ -3,17 +3,26 @@
 namespace src\Http\Actions\Posts;
 
 use src\Http\Actions\ActionInterface;
-use src\Blog\Interfaces\{PostsRepositoryInterface, UsersRepositoryInterface, LikesRepositoryInterface};
-use src\Blog\{UUID, Post, Like};
+use src\Blog\Interfaces\{PostsRepositoryInterface, LikesRepositoryInterface};
+use src\Blog\{UUID, Like};
 use src\Http\{Request, Response, SuccessfulResponse, ErrorResponse};
-use src\Blog\Exceptions\{HttpException, UserNotFoundException, InvalidArgumentException, PostNotFoundException, LikeForSamePostException};
+use src\Blog\Exceptions\{HttpException, InvalidArgumentException, PostNotFoundException, LikeForSamePostException};
+use src\Http\Auth\IdentificationInterface;
+use Psr\Log\LoggerInterface;
+
+// http: //localhost/likes/create
+// {
+//     "post_uuid": "235c0e61-0aee-4b07-873e-7918b7e00416",
+//     "username": "ivan"
+// }
 
 class CreateLike implements ActionInterface
 {
     public function __construct(
         private LikesRepositoryInterface $likesRepository,
         private PostsRepositoryInterface $postsRepository,
-        private UsersRepositoryInterface $usersRepository,
+        private IdentificationInterface $identification,
+        private LoggerInterface $logger,
     ) {
     }
     public function handle(Request $request): Response
@@ -28,18 +37,11 @@ class CreateLike implements ActionInterface
         } catch (PostNotFoundException $e) {
             return new ErrorResponse($e->getMessage());
         }
-        try {
-            $authorUuid = $request->jsonBodyField('username');
-        } catch (HttpException | InvalidArgumentException $e) {
-            return new ErrorResponse($e->getMessage());
-        }
-        try {
-            $user = $this->usersRepository->getUuidByUsername($authorUuid);
-        } catch (UserNotFoundException $e) {
-            return new ErrorResponse($e->getMessage());
-        }
+
+        $user = $this->identification->user($request);
+
         $newLikeUuid = UUID::random();
-        if ($this->likesRepository->userLikedForPost($postUuid, new UUID($user))) {
+        if ($this->likesRepository->userLikedForPost($postUuid, $user->uuid())) {
             throw new LikeForSamePostException(
                 "The user already liked this post"
             );
@@ -48,12 +50,13 @@ class CreateLike implements ActionInterface
             $like = new Like(
                 $newLikeUuid,
                 $post->uuid(),
-                $user,
+                $user->uuid(),
             );
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
         $this->likesRepository->save($like);
+        $this->logger->info("Like created: $newLikeUuid");
         return new SuccessfulResponse([
             'uuid' => (string)$newLikeUuid,
         ]);

@@ -76,7 +76,7 @@ class LikesRepository implements LikesRepositoryInterface
             'username_uuid' => (string)$usernameUuid,
         ]);
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if ($result === false) {
+        if ($result === false || count($result) == 0) {
             return false;
         } else {
             return true;

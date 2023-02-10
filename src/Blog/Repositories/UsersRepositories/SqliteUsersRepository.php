@@ -8,27 +8,49 @@ use PDOStatement;
 use src\Blog\Exceptions\UserNotFoundException;
 use src\Person\Name;
 use src\Blog\Interfaces\UsersRepositoryInterface;
+use Exception;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class SqliteUsersRepository implements UsersRepositoryInterface
 {
     public function __construct(
-        private PDO $connection
+        private PDO $connection,
     ) {
     }
 
     public function save(User $user): void
     {
+        $dirRoot = $_SERVER['DOCUMENT_ROOT'];
+        $logger = (new Logger('blog'));
+        if ('yes' === $_SERVER['LOG_TO_FILES']) {
+            $logger
+                ->pushHandler(new StreamHandler(
+                    $dirRoot . '/logs/blog.log'
+                ))
+                ->pushHandler(new StreamHandler(
+                    $dirRoot . '/logs/blog.error.log',
+                    level: Logger::ERROR,
+                    bubble: false,
+                ));
+        }
+
         $statement = $this->connection->prepare(
             'INSERT INTO users (uuid, username, first_name, last_name)
             VALUES (:uuid, :username, :first_name, :last_name)'
         );
 
-        $statement->execute([
-            'uuid' => (string)$user->uuid(),
-            'username' => $user->username(),
-            'first_name' => $user->name()->first(),
-            'last_name' => $user->name()->last(),
-        ]);
+        try {
+            $statement->execute([
+                'uuid' => (string)$user->uuid(),
+                'username' => $user->username(),
+                'first_name' => $user->name()->first(),
+                'last_name' => $user->name()->last(),
+            ]);
+            $logger->info("User created");
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function delete(UUID $uuid): void

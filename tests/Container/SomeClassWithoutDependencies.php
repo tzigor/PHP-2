@@ -1,6 +1,6 @@
 <?php
 
-namespace src\tests\Container;
+namespace UnitTests\Container;
 
 class SomeClassWithoutDependencies
 {

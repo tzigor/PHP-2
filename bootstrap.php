@@ -1,5 +1,6 @@
 <?php
 
+use Dotenv\Dotenv;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -19,7 +20,7 @@ use src\Http\Auth\JsonBodyUuidIdentification;
 
 require_once __DIR__ . '/vendor/autoload.php';
 // Загружаем переменные окружения из файла .env
-\Dotenv\Dotenv::createImmutable(__DIR__)->safeLoad();
+Dotenv::createImmutable(__DIR__)->safeLoad();
 
 $container = new DIContainer();
 

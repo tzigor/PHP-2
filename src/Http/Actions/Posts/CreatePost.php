@@ -10,6 +10,13 @@ use src\Http\{Request, Response, SuccessfulResponse, ErrorResponse};
 use src\Blog\Exceptions\{HttpException};
 use src\Http\Auth\IdentificationInterface;
 
+// http://localhost/posts/create
+// {
+//     "username": "ivan",
+//     "title": "title",
+//     "text": "Text text"
+// }
+
 class CreatePost implements ActionInterface
 {
     public function __construct(
