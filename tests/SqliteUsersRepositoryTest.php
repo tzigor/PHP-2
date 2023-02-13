@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Blog\test;
+namespace UnitTests;
 
 use PDO;
 use PDOStatement;

@@ -1,6 +1,6 @@
 <?php
 
-namespace src\tests\Container;
+namespace UnitTests\Container;
 
 use src\Blog\Container\DIContainer;
 use src\Blog\Exceptions\NotFoundException;

@@ -1,5 +1,6 @@
 <?php
 
+use Psr\Log\LoggerInterface;
 use src\Blog\Commands\{createUserCommand, Arguments};
 use src\Blog\Repositories\UsersRepositories\SqliteUsersRepository;
 use src\Blog\Repositories\{PostsRepository, CommentsRepository};
@@ -8,12 +9,13 @@ use src\Blog\{Post, Comment, UUID, User};
 use src\Person\Name;
 
 $container = require __DIR__ . '/bootstrap.php';
+$logger = $container->get(LoggerInterface::class);
 
 try {
     $command = $container->get(CreateUserCommand::class);
     $command->handle(Arguments::fromArgv($argv));
 } catch (AppException $e) {
-    echo "{$e->getMessage()}\n";
+    $logger->error($e->getMessage(), ['exception' => $e]);
 }
 
 

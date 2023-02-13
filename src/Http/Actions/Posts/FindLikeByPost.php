@@ -8,12 +8,14 @@ use src\Blog\Interfaces\PostsRepositoryInterface;
 use src\Blog\Interfaces\LikesRepositoryInterface;
 use src\Blog\Exceptions\HttpException;
 use src\Blog\UUID;
+use Psr\Log\LoggerInterface;
 
 class FindLikeByPost implements ActionInterface
 {
     public function __construct(
         private LikesRepositoryInterface $likesRepository,
-        private PostsRepositoryInterface $postsRepository
+        private PostsRepositoryInterface $postsRepository,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -22,6 +24,7 @@ class FindLikeByPost implements ActionInterface
         try {
             $postUuid = new UUID($request->query('post_uuid'));
         } catch (HttpException $e) {
+            $this->logger->warning("Post not found: $postUuid");
             return new ErrorResponse($e->getMessage());
         }
 
