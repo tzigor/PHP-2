@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "ee913777cd794a1a5924b44389c0058e",
+=======
+    "content-hash": "eb5b5780250a51b83e6fceea48ff24a7",
+>>>>>>> main
     "packages": [
         {
             "name": "fakerphp/faker",
@@ -75,6 +79,7 @@
             "time": "2022-12-13T13:54:32+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "graham-campbell/result-type",
             "version": "v1.1.0",
             "source": {
@@ -313,6 +318,8 @@
             "time": "2022-07-30T15:51:26+00:00"
         },
         {
+=======
+>>>>>>> main
             "name": "psr/container",
             "version": "2.0.2",
             "source": {
@@ -366,6 +373,7 @@
             "time": "2021-11-05T16:47:00+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "psr/log",
             "version": "3.0.0",
             "source": {
@@ -416,6 +424,8 @@
             "time": "2021-07-14T16:46:02+00:00"
         },
         {
+=======
+>>>>>>> main
             "name": "symfony/deprecation-contracts",
             "version": "v3.2.0",
             "source": {
@@ -481,6 +491,7 @@
                 }
             ],
             "time": "2022-11-25T10:21:52+00:00"
+<<<<<<< HEAD
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2629,14 +2640,23 @@
             "time": "2021-07-28T10:34:58+00:00"
         }
     ],
+=======
+        }
+    ],
+    "packages-dev": [],
+>>>>>>> main
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
+<<<<<<< HEAD
     "platform": {
         "ext-pdo": "*"
     },
+=======
+    "platform": [],
+>>>>>>> main
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }
