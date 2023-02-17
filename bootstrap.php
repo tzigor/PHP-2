@@ -15,8 +15,13 @@ use src\Blog\Repositories\CommentsRepository;
 use src\Blog\Repositories\LikesRepository;
 use src\Blog\Repositories\CommentLikesRepository;
 use src\Blog\Repositories\UsersRepositories\SqliteUsersRepository;
+use src\Blog\Repositories\AuthTokensRepository;
 use src\Http\Auth\IdentificationInterface;
+use src\Http\Auth\AuthenticationInterface;
+use src\Blog\Interfaces\PasswordAuthenticationInterface;
+use src\Blog\Interfaces\AuthTokensRepositoryInterface;
 use src\Http\Auth\JsonBodyUuidIdentification;
+use src\Http\Auth\PasswordAuthentication;
 
 require_once __DIR__ . '/vendor/autoload.php';
 // Загружаем переменные окружения из файла .env
@@ -70,6 +75,12 @@ $container->bind(
 );
 
 $container->bind(
+    AuthenticationInterface::class,
+    PasswordAuthentication::class
+);
+
+
+$container->bind(
     CommentsRepositoryInterface::class,
     CommentsRepository::class
 );
@@ -82,6 +93,16 @@ $container->bind(
 $container->bind(
     CommentLikesRepositoryInterface::class,
     CommentLikesRepository::class
+);
+
+$container->bind(
+    PasswordAuthenticationInterface::class,
+    PasswordAuthentication::class
+);
+
+$container->bind(
+    AuthTokensRepositoryInterface::class,
+    AuthTokensRepository::class
 );
 
 return $container;

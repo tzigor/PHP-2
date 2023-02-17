@@ -2,13 +2,13 @@
 
 namespace src\Http\Auth;
 
-use src\Http\Auth\IdentificationInterface;
+use src\Http\Auth\AuthenticationInterface;
 use src\Blog\Interfaces\UsersRepositoryInterface;
 use src\Blog\{User, UUID};
 use src\Http\Request;
 use src\Blog\Exceptions\{HttpException, UserNotFoundException, InvalidArgumentException};
 
-class JsonBodyUuidIdentification implements IdentificationInterface
+class JsonBodyUuidIdentification implements AuthenticationInterface
 {
     public function __construct(
         private UsersRepositoryInterface $usersRepository

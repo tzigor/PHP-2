@@ -2,11 +2,7 @@
     "name": "itsukanov/php-2",
     "autoload": {
         "psr-4": {
-<<<<<<< HEAD
             "src\\": "src/"
-=======
-            "App\\": "src/"
->>>>>>> main
         }
     },
     "authors": [
@@ -16,7 +12,6 @@
         }
     ],
     "require": {
-<<<<<<< HEAD
         "fakerphp/faker": "^1.21",
         "ext-pdo": "*",
         "symfony/polyfill-uuid": "^1.27",
@@ -30,8 +25,3 @@
         "test": "phpunit tests --testdox --colors"
     }
 }
-=======
-        "fakerphp/faker": "^1.21"
-    }
-}
->>>>>>> main

@@ -8,26 +8,27 @@ use src\Blog\Interfaces\{PostsRepositoryInterface};
 use src\Blog\{UUID, Post};
 use src\Http\{Request, Response, SuccessfulResponse, ErrorResponse};
 use src\Blog\Exceptions\{HttpException};
-use src\Http\Auth\IdentificationInterface;
+use src\Http\Auth\AuthenticationInterface;
 
 // http://localhost/posts/create
 // {
-//     "username": "ivan",
-//     "title": "title",
-//     "text": "Text text"
+// "username": "ivan",
+// "password": "123",
+// "title": "title",
+// "text": "Text text"
 // }
 
 class CreatePost implements ActionInterface
 {
     public function __construct(
         private PostsRepositoryInterface $postsRepository,
-        private IdentificationInterface $identification,
+        private AuthenticationInterface $authentication,
         private LoggerInterface $logger,
     ) {
     }
     public function handle(Request $request): Response
     {
-        $user = $this->identification->user($request);
+        $user = $this->authentication->user($request);
         $newPostUuid = UUID::random();
         try {
             $post = new Post(

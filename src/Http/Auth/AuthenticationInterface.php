@@ -5,7 +5,7 @@ namespace src\Http\Auth;
 use src\Http\Request;
 use src\Blog\User;
 
-interface IdentificationInterface
+interface AuthenticationInterface
 {
     public function user(Request $request): User;
 }

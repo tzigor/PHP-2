@@ -43,6 +43,7 @@ class SqlitePostsRepositoryTest extends TestCase
             new UUID('123e4567-e89b-12d3-a456-426614174000'),
             new Name('Igor', 'Ivanov'),
             'admin',
+            '123'
         );
         $connectionStub->method('prepare')->willReturn($statementMock);
         $repository = new PostsRepository($connectionStub);
