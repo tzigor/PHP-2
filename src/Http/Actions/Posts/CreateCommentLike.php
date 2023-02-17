@@ -7,7 +7,7 @@ use src\Blog\Interfaces\{CommentsRepositoryInterface, UsersRepositoryInterface, 
 use src\Blog\{UUID, Post, Like};
 use src\Http\{Request, Response, SuccessfulResponse, ErrorResponse};
 use src\Blog\Exceptions\{HttpException, InvalidArgumentException, CommentNotFoundException, LikeForSamePostException};
-use src\Http\Auth\IdentificationInterface;
+use src\Http\Auth\AuthenticationInterface;
 use Psr\Log\LoggerInterface;
 
 class CreateCommentLike implements ActionInterface
@@ -15,7 +15,7 @@ class CreateCommentLike implements ActionInterface
     public function __construct(
         private CommentLikesRepositoryInterface $commentLikesRepository,
         private CommentsRepositoryInterface $commentsRepository,
-        private IdentificationInterface $identification,
+        private AuthenticationInterface $identification,
         private LoggerInterface $logger,
     ) {
     }

@@ -3,7 +3,7 @@
 use Psr\Log\LoggerInterface;
 use src\Blog\Exceptions\{HttpException, AppException};
 use src\Http\{Request, ErrorResponse};
-use src\Http\Actions\Users\FindByUsername;
+use src\Http\Actions\Users\{FindByUsername, LogIn};
 use src\Http\Actions\Posts\{
     CreatePost,
     CreateComment,
@@ -12,7 +12,7 @@ use src\Http\Actions\Posts\{
     DeleteComment,
     CreateLike,
     CreateCommentLike,
-    FindLikeByPost
+    FindLikeByPost,
 };
 use src\Http\Actions\Users\{CreateUser, DeleteUser};
 
@@ -42,6 +42,7 @@ $routes = [
         '/likes/show' => FindLikeByPost::class,
     ],
     'POST' => [
+        '/login' => LogIn::class,
         '/posts/create' => CreatePost::class,
         '/comments/create' => CreateComment::class,
         '/users/create' => CreateUser::class,

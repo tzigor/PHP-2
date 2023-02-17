@@ -33,4 +33,13 @@ class InMemoryUsersRepository implements UsersRepositoryInterface
         }
         throw new UserNotFoundException("User not found: $username");
     }
+
+    public function delete(UUID $uuid): void
+    {
+    }
+
+    public function getUuidByUsername(string $username): UUID
+    {
+        return new UUID('');
+    }
 }

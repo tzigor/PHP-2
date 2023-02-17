@@ -12,9 +12,10 @@ use Psr\Log\LoggerInterface;
 
 // http://localhost/users/create
 // {
-//     "first_name": "Vovan",
-//     "last_name": "Litvinenka",
-//     "username": "vovan"
+// "first_name": "Vovan",
+// "last_name": "Litvinenka",
+// "username": "vovan",
+// "password": "123"
 // }
 
 class CreateUser implements ActionInterface
@@ -36,12 +37,11 @@ class CreateUser implements ActionInterface
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
-
         try {
-            $user = new User(
-                $newUserUuid,
-                $name,
+            $user = User::createFrom(
                 $request->jsonBodyField('username'),
+                $request->jsonBodyField('password'),
+                $name,
             );
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());

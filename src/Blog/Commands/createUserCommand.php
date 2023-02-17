@@ -36,6 +36,7 @@ class createUserCommand
                 $arguments->get('last_name')
             ),
             $username,
+            $password = $arguments->get('password')
         ));
 
         $this->logger->info("User created: $uuid");

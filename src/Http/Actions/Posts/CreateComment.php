@@ -7,7 +7,7 @@ use src\Blog\Interfaces\{PostsRepositoryInterface, CommentsRepositoryInterface};
 use src\Blog\{UUID, Comment};
 use src\Http\{Request, Response, SuccessfulResponse, ErrorResponse};
 use src\Blog\Exceptions\{HttpException, PostNotFoundException, InvalidArgumentException};
-use src\Http\Auth\IdentificationInterface;
+use src\Http\Auth\AuthenticationInterface;
 use Psr\Log\LoggerInterface;
 
 // http://localhost/comments/create
@@ -21,7 +21,7 @@ class CreateComment implements ActionInterface
 {
     public function __construct(
         private PostsRepositoryInterface $postsRepository,
-        private IdentificationInterface $identification,
+        private AuthenticationInterface $identification,
         private CommentsRepositoryInterface $commentsRepository,
         private LoggerInterface $logger,
     ) {

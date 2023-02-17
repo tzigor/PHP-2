@@ -2,7 +2,6 @@
 
 namespace src\Blog;
 
-<<<<<<< HEAD
 class Comment
 {
     public function __construct(
@@ -37,16 +36,4 @@ class Comment
     {
         return $this->text;
     }
-=======
-
-class Comment
-{
-    public function __construct(
-        private int $id,
-        private int $authorId,
-        private int $blogId,
-        private string $text
-    ) {
-    }
->>>>>>> main
 }
