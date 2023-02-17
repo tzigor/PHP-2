@@ -7,13 +7,13 @@ use src\Blog\Interfaces\{PostsRepositoryInterface, LikesRepositoryInterface};
 use src\Blog\{UUID, Like};
 use src\Http\{Request, Response, SuccessfulResponse, ErrorResponse};
 use src\Blog\Exceptions\{HttpException, InvalidArgumentException, PostNotFoundException, LikeForSamePostException};
-use src\Http\Auth\AuthenticationInterface;
+use src\Blog\Interfaces\TokenAuthenticationInterface;
 use Psr\Log\LoggerInterface;
 
 // http: //localhost/likes/create
 // {
-//     "post_uuid": "235c0e61-0aee-4b07-873e-7918b7e00416",
-//     "username": "ivan"
+// "post_uuid": "235c0e61-0aee-4b07-873e-7918b7e00416",
+// "username": "vovan"
 // }
 
 class CreateLike implements ActionInterface
@@ -21,7 +21,7 @@ class CreateLike implements ActionInterface
     public function __construct(
         private LikesRepositoryInterface $likesRepository,
         private PostsRepositoryInterface $postsRepository,
-        private AuthenticationInterface $identification,
+        private TokenAuthenticationInterface $identification,
         private LoggerInterface $logger,
     ) {
     }

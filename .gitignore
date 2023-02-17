@@ -1,9 +1,7 @@
-/vendor/
-<<<<<<< HEAD
+/vendor
 /logs
 .env
 composer.json
 composer.lock
 README.md
-=======
->>>>>>> main
+

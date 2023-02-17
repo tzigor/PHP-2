@@ -22,9 +22,11 @@ use src\Blog\Interfaces\PasswordAuthenticationInterface;
 use src\Blog\Interfaces\AuthTokensRepositoryInterface;
 use src\Http\Auth\JsonBodyUuidIdentification;
 use src\Http\Auth\PasswordAuthentication;
+use src\Blog\Interfaces\TokenAuthenticationInterface;
+use src\Http\Auth\TokenAuthentication;
 
 require_once __DIR__ . '/vendor/autoload.php';
-// Загружаем переменные окружения из файла .env
+
 Dotenv::createImmutable(__DIR__)->safeLoad();
 
 $container = new DIContainer();
@@ -103,6 +105,11 @@ $container->bind(
 $container->bind(
     AuthTokensRepositoryInterface::class,
     AuthTokensRepository::class
+);
+
+$container->bind(
+    TokenAuthenticationInterface::class,
+    TokenAuthentication::class
 );
 
 return $container;
