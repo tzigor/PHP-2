@@ -12,6 +12,9 @@ use src\Blog\Interfaces\UsersRepositoryInterface;
 use src\Blog\Exceptions\ArgumentsException;
 use PHPUnit\Framework\TestCase;
 use UnitTests\DummyLogger;
+use Symfony\Component\Console\Exception\RuntimeException;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 class CreateUserCommandTest extends TestCase
 {
@@ -26,36 +29,6 @@ class CreateUserCommandTest extends TestCase
         $command->handle(new Arguments(['username' => 'Ivan']));
     }
 
-    public function testItRequiresFirstName_(): void
-    {
-        $usersRepository = new class implements UsersRepositoryInterface
-        {
-            public function save(User $user): void
-            {
-            }
-
-            public function delete(UUID $uuid): void
-            {
-            }
-
-            public function get(UUID $uuid): User
-            {
-                throw new UserNotFoundException("Not found");
-            }
-            public function getByUsername(string $username): User
-            {
-                throw new UserNotFoundException("Not found");
-            }
-            public function getUuidByUsername(string $username): UUID
-            {
-                return UUID::random();
-            }
-        };
-        $command = new CreateUserCommand($usersRepository, new DummyLogger());
-        $this->expectException(ArgumentsException::class);
-        $this->expectExceptionMessage('No such argument: first_name');
-        $command->handle(new Arguments(['username' => 'Ivan']));
-    }
 
     private function makeUsersRepository(): UsersRepositoryInterface
     {
@@ -87,10 +60,14 @@ class CreateUserCommandTest extends TestCase
         $command = new CreateUserCommand($this->makeUsersRepository(), new DummyLogger());
         $this->expectException(ArgumentsException::class);
         $this->expectExceptionMessage('No such argument: last_name');
-        $command->handle(new Arguments([
-            'username' => 'Ivan',
-            'first_name' => 'Ivan',
-        ]));
+        $command->run(
+            new ArrayInput([
+                'username' => 'Ivan',
+                'password' => 'some_password',
+                'first_name' => 'Ivan',
+            ]),
+            new NullOutput()
+        );
     }
 
     public function testItRequiresFirstName(): void
@@ -98,7 +75,28 @@ class CreateUserCommandTest extends TestCase
         $command = new CreateUserCommand($this->makeUsersRepository(), new DummyLogger());
         $this->expectException(ArgumentsException::class);
         $this->expectExceptionMessage('No such argument: first_name');
-        $command->handle(new Arguments(['username' => 'Ivan']));
+        $command->run(
+            new ArrayInput([
+                'username' => 'Ivan',
+                'password' => 'some_password',
+            ]),
+            new NullOutput()
+        );
+    }
+
+    public function testItRequiresPassword(): void
+    {
+        $command = new CreateUserCommand($this->makeUsersRepository(), new DummyLogger());
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            'Not enough arguments (missing: "first_name, last_name, password"'
+        );
+        $command->run(
+            new ArrayInput([
+                'username' => 'Ivan',
+            ]),
+            new NullOutput()
+        );
     }
 
     public function testItSavesUserToRepository(): void
@@ -131,11 +129,15 @@ class CreateUserCommandTest extends TestCase
             }
         };
         $command = new CreateUserCommand($usersRepository, new DummyLogger());
-        $command->handle(new Arguments([
-            'username' => 'Ivan',
-            'first_name' => 'Ivan',
-            'last_name' => 'Nikitin',
-        ]));
+        $command->run(
+            new ArrayInput([
+                'username' => 'Ivan',
+                'password' => 'some_password',
+                'first_name' => 'Ivan',
+                'last_name' => 'Nikitin',
+            ]),
+            new NullOutput()
+        );
         $this->assertTrue($usersRepository->wasCalled());
     }
 }
