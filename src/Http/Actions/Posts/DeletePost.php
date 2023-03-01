@@ -5,7 +5,7 @@ namespace src\Http\Actions\Posts;
 use src\Http\Actions\ActionInterface;
 use src\Blog\Interfaces\PostsRepositoryInterface;
 use src\Http\{Request, Response, SuccessfulResponse, ErrorResponse};
-use src\Blog\Exceptions\{HttpException};
+use src\Blog\Exceptions\HttpException;
 use src\Blog\UUID;
 
 class DeletePost implements ActionInterface

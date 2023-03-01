@@ -3,7 +3,7 @@
 use Psr\Log\LoggerInterface;
 use src\Blog\Exceptions\{HttpException, AppException};
 use src\Http\{Request, ErrorResponse};
-use src\Http\Actions\Users\{FindByUsername, LogIn};
+use src\Http\Actions\Users\{FindByUsername, LogIn, LogOut};
 use src\Http\Actions\Posts\{
     CreatePost,
     CreateComment,
@@ -43,6 +43,7 @@ $routes = [
     ],
     'POST' => [
         '/login' => LogIn::class,
+        '/logout' => LogOut::class,
         '/posts/create' => CreatePost::class,
         '/comments/create' => CreateComment::class,
         '/users/create' => CreateUser::class,

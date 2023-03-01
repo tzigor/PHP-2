@@ -4,16 +4,15 @@ namespace src\Http\Actions\Posts;
 
 use Psr\Log\LoggerInterface;
 use src\Http\Actions\ActionInterface;
-use src\Blog\Interfaces\{PostsRepositoryInterface};
+use src\Blog\Interfaces\PostsRepositoryInterface;
 use src\Blog\{UUID, Post};
 use src\Http\{Request, Response, SuccessfulResponse, ErrorResponse};
-use src\Blog\Exceptions\{HttpException};
-use src\Http\Auth\AuthenticationInterface;
+use src\Blog\Exceptions\HttpException;
+use src\Blog\Interfaces\TokenAuthenticationInterface;
 
+// Authorization: Bearer ...
 // http://localhost/posts/create
 // {
-// "username": "ivan",
-// "password": "123",
 // "title": "title",
 // "text": "Text text"
 // }
@@ -22,7 +21,7 @@ class CreatePost implements ActionInterface
 {
     public function __construct(
         private PostsRepositoryInterface $postsRepository,
-        private AuthenticationInterface $authentication,
+        private TokenAuthenticationInterface $authentication,
         private LoggerInterface $logger,
     ) {
     }

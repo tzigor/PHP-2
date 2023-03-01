@@ -25,6 +25,7 @@ class CreateUser implements ActionInterface
         private LoggerInterface $logger,
     ) {
     }
+
     public function handle(Request $request): Response
     {
         $newUserUuid = UUID::random();
