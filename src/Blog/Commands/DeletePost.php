@@ -33,13 +33,9 @@ class DeletePost extends Command
                 'UUID of a post to delete'
             )
             ->addOption(
-                // Имя опции
                 'check-existence',
-                // Сокращённое имя
                 'c',
-                // Опция не имеет значения
                 InputOption::VALUE_NONE,
-                // Описание
                 'Check if post actually exists',
             );
     }
@@ -50,7 +46,6 @@ class DeletePost extends Command
     ): int {
         $question = new ConfirmationQuestion(
             'Delete post [y/n]? ',
-            // По умолчанию не удалять
             false
         );
 

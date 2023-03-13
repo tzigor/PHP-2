@@ -1,7 +1,7 @@
 <?php
 
 use src\Blog\Commands\createUserCommand;
-use src\Blog\Commands\DeletePost;
+use src\Blog\Commands\{DeletePost, UpdateUser, PopulateDB};
 use Symfony\Component\Console\Application;
 
 $container = require __DIR__ . '/bootstrap.php';
@@ -11,6 +11,8 @@ $application = new Application();
 $commandsClasses = [
     createUserCommand::class,
     DeletePost::class,
+    UpdateUser::class,
+    PopulateDB::class,
 ];
 foreach ($commandsClasses as $commandClass) {
     // Посредством контейнера

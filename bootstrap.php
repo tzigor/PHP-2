@@ -1,5 +1,9 @@
 <?php
 
+use Faker\Provider\Lorem;
+use Faker\Provider\ru_RU\Internet;
+use Faker\Provider\ru_RU\Person;
+use Faker\Provider\ru_RU\Text;
 use Dotenv\Dotenv;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
@@ -31,6 +35,12 @@ Dotenv::createImmutable(__DIR__)->safeLoad();
 
 $container = new DIContainer();
 
+$faker = new \Faker\Generator();
+$faker->addProvider(new Person($faker));
+$faker->addProvider(new Text($faker));
+$faker->addProvider(new Internet($faker));
+$faker->addProvider(new Lorem($faker));
+
 $logger = (new Logger('blog'));
 if ('yes' === $_SERVER['LOG_TO_FILES']) {
     $logger
@@ -50,6 +60,11 @@ if ('yes' === $_SERVER['LOG_TO_CONSOLE']) {
             new StreamHandler("php://stdout")
         );
 }
+
+$container->bind(
+    \Faker\Generator::class,
+    $faker
+);
 
 $container->bind(
     LoggerInterface::class,
